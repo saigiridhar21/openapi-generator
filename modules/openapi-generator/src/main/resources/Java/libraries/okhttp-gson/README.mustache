@@ -91,7 +91,7 @@ public class Example {
 
         {{#hasAuthMethods}}
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-	    defaultClient.setBasePath("https://api.factset.com");
+        defaultClient.setBasePath("https://api.factset.com");
         {{#authMethods}}{{#isBasic}}
         // Configure HTTP basic authorization: {{{name}}}
         HttpBasicAuth {{{name}}} = (HttpBasicAuth) defaultClient.getAuthentication("{{{name}}}");
@@ -109,10 +109,10 @@ public class Example {
         {{/hasAuthMethods}}
 
         // To enable ssl verification
-        // apiClient.setVerifyingSsl(true);
-        // apiClient.setSslCaCert(certificate_inputstream);
+        // defaultClient.setVerifyingSsl(true);
+        // defaultClient.setSslCaCert(certificate_inputstream);
 
-        {{{classname}}} apiInstance = new {{{classname}}}();
+        {{{classname}}} apiInstance = new {{{classname}}}(defaultClient);
         {{#allParams}}
         {{{dataType}}} {{{paramName}}} = {{{example}}}; // {{{dataType}}} | {{{description}}}
         {{/allParams}}
@@ -123,7 +123,7 @@ public class Example {
                 .{{{paramName}}}({{{paramName}}}){{/optionalParams}}
                 .execute();{{/vendorExtensions.x-group-parameters}}
             System.out.println(result.getStatusCode());
-	        {{#returnType}}System.out.println(result.getData());{{/returnType}}
+            {{#returnType}}System.out.println(result.getData());{{/returnType}}
         } catch (ApiException e) {
             System.err.println("Exception when calling {{{classname}}}#{{{operationId}}}WithHttpInfo");
             System.err.println("Status code: " + e.getCode());

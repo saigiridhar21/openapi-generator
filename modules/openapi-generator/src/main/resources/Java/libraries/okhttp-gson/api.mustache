@@ -77,20 +77,12 @@ public class {{classname}} {
      * @see <a href="{{url}}">{{summary}} Documentation</a>
         {{/externalDocs}}
 
-     <p><b>HTTP response codes</b>
-     <table summary="HTTP response codes" border="1">
-      <tr><td> HTTP Status Code </td><td> Description </td></tr>
+     <p><b>HTTP response details </b>
+     <table summary="HTTP Response codes" border="1">
+      <tr><td> HTTP Status Code </td><td> Description </td><td> Response Headers </td></tr>
       {{#responses}}
-      <tr><td> {{code}} </td><td> {{message}} </td></tr>
+      <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} </td></tr>
       {{/responses}}
-     </table>
-
-     <p><b>HTTP response headers</b>
-     <table summary="HTTP response headers" border="1">
-      <tr><td> Header Name </td><td> Description </td></tr>
-      {{#responseHeaders}}
-      <tr><td> {{baseName}} </td><td> {{description}} </td></tr>
-      {{/responseHeaders}}
      </table>
 
      */
@@ -204,20 +196,12 @@ public class {{classname}} {
      * @see <a href="{{url}}">{{summary}} Documentation</a>
         {{/externalDocs}}
 		
-     <p><b>HTTP response codes</b>
-     <table summary="HTTP response codes" border="1">
-      <tr><td> HTTP Status Code </td><td> Description </td></tr>
+     <p><b>HTTP response details </b>
+     <table summary="HTTP Response codes" border="1">
+      <tr><td> HTTP Status Code </td><td> Description </td><td> Response Headers </td></tr>
       {{#responses}}
-      <tr><td> {{code}} </td><td> {{message}} </td></tr>
+      <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} </td></tr>
       {{/responses}}
-     </table>
-
-     <p><b>HTTP response headers</b>
-     <table summary="HTTP response headers" border="1">
-      <tr><td> Header Name </td><td> Description </td></tr>
-      {{#responseHeaders}}
-      <tr><td> {{baseName}} </td><td> {{description}} </td></tr>
-      {{/responseHeaders}}
      </table>
 	 
      */
@@ -244,20 +228,12 @@ public class {{classname}} {
      * @see <a href="{{url}}">{{summary}} Documentation</a>
         {{/externalDocs}}
 
-     <p><b>HTTP response codes</b>
-     <table summary="HTTP response codes" border="1">
-      <tr><td> HTTP Status Code </td><td> Description </td></tr>
+     <p><b>HTTP response details </b>
+     <table summary="HTTP Response codes" border="1">
+      <tr><td> HTTP Status Code </td><td> Description </td><td> Response Headers </td></tr>
       {{#responses}}
-      <tr><td> {{code}} </td><td> {{message}} </td></tr>
+      <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} </td></tr>
       {{/responses}}
-     </table>
-
-     <p><b>HTTP response headers</b>
-     <table summary="HTTP response headers" border="1">
-      <tr><td> Header Name </td><td> Description </td></tr>
-      {{#responseHeaders}}
-      <tr><td> {{baseName}} </td><td> {{description}} </td></tr>
-      {{/responseHeaders}}
      </table>
 	 
      */
@@ -285,20 +261,12 @@ public class {{classname}} {
      * @see <a href="{{url}}">{{summary}} Documentation</a>
         {{/externalDocs}}
 		
-     <p><b>HTTP response codes</b>
-     <table summary="HTTP response codes" border="1">
-      <tr><td> HTTP Status Code </td><td> Description </td></tr>
+     <p><b>HTTP response details </b>
+     <table summary="HTTP Response codes" border="1">
+      <tr><td> HTTP Status Code </td><td> Description </td><td> Response Headers </td></tr>
       {{#responses}}
-      <tr><td> {{code}} </td><td> {{message}} </td></tr>
+      <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} </td></tr>
       {{/responses}}
-     </table>
-
-     <p><b>HTTP response headers</b>
-     <table summary="HTTP response headers" border="1">
-      <tr><td> Header Name </td><td> Description </td></tr>
-      {{#responseHeaders}}
-      <tr><td> {{baseName}} </td><td> {{description}} </td></tr>
-      {{/responseHeaders}}
      </table>
 	 
      */
@@ -349,20 +317,12 @@ public class {{classname}} {
          * @deprecated
          {{/isDeprecated}}
 		 
-         <p><b>HTTP response codes</b>
-         <table summary="HTTP response codes" border="1">
-          <tr><td> HTTP Status Code </td><td> Description </td></tr>
+         <p><b>HTTP response details </b>
+         <table summary="HTTP Response codes" border="1">
+          <tr><td> HTTP Status Code </td><td> Description </td><td> Response Headers </td></tr>
           {{#responses}}
-          <tr><td> {{code}} </td><td> {{message}} </td></tr>
+          <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} </td></tr>
           {{/responses}}
-         </table>
-
-         <p><b>HTTP response headers</b>
-         <table summary="HTTP response headers" border="1">
-          <tr><td> Header Name </td><td> Description </td></tr>
-          {{#responseHeaders}}
-          <tr><td> {{baseName}} </td><td> {{description}} </td></tr>
-          {{/responseHeaders}}
          </table>
 
          */
@@ -381,20 +341,12 @@ public class {{classname}} {
          * @deprecated
          {{/isDeprecated}}
 		 
-         <p><b>HTTP response codes</b>
-         <table summary="HTTP response codes" border="1">
-          <tr><td> HTTP Status Code </td><td> Description </td></tr>
+         <p><b>HTTP response details </b>
+         <table summary="HTTP Response codes" border="1">
+          <tr><td> HTTP Status Code </td><td> Description </td><td> Response Headers </td></tr>
           {{#responses}}
-          <tr><td> {{code}} </td><td> {{message}} </td></tr>
+          <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} </td></tr>
           {{/responses}}
-         </table>
-
-         <p><b>HTTP response headers</b>
-         <table summary="HTTP response headers" border="1">
-          <tr><td> Header Name </td><td> Description </td></tr>
-          {{#responseHeaders}}
-          <tr><td> {{baseName}} </td><td> {{description}} </td></tr>
-          {{/responseHeaders}}
          </table>
 		 
          */
@@ -414,20 +366,12 @@ public class {{classname}} {
          * @deprecated
          {{/isDeprecated}}
 		 
-         <p><b>HTTP response codes</b>
-         <table summary="HTTP response codes" border="1">
-          <tr><td> HTTP Status Code </td><td> Description </td></tr>
+         <p><b>HTTP response details </b>
+         <table summary="HTTP Response codes" border="1">
+          <tr><td> HTTP Status Code </td><td> Description </td><td> Response Headers </td></tr>
           {{#responses}}
-          <tr><td> {{code}} </td><td> {{message}} </td></tr>
+          <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} </td></tr>
           {{/responses}}
-         </table>
-
-         <p><b>HTTP response headers</b>
-         <table summary="HTTP response headers" border="1">
-          <tr><td> Header Name </td><td> Description </td></tr>
-          {{#responseHeaders}}
-          <tr><td> {{baseName}} </td><td> {{description}} </td></tr>
-          {{/responseHeaders}}
          </table>
 		 
          */
@@ -447,20 +391,12 @@ public class {{classname}} {
          * @deprecated
          {{/isDeprecated}}
 		 		 
-         <p><b>HTTP response codes</b>
-         <table summary="HTTP response codes" border="1">
-          <tr><td> HTTP Status Code </td><td> Description </td></tr>
+         <p><b>HTTP response details </b>
+         <table summary="HTTP Response codes" border="1">
+          <tr><td> HTTP Status Code </td><td> Description </td><td> Response Headers </td></tr>
           {{#responses}}
-          <tr><td> {{code}} </td><td> {{message}} </td></tr>
+          <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} </td></tr>
           {{/responses}}
-         </table>
-
-         <p><b>HTTP response headers</b>
-         <table summary="HTTP response headers" border="1">
-          <tr><td> Header Name </td><td> Description </td></tr>
-          {{#responseHeaders}}
-          <tr><td> {{baseName}} </td><td> {{description}} </td></tr>
-          {{/responseHeaders}}
          </table>
 		 
          */
@@ -485,20 +421,12 @@ public class {{classname}} {
      * @see <a href="{{url}}">{{summary}} Documentation</a>
         {{/externalDocs}}
 		
-     <p><b>HTTP response codes</b>
-     <table summary="HTTP response codes" border="1">
-      <tr><td> HTTP Status Code </td><td> Description </td></tr>
+     <p><b>HTTP response details </b>
+     <table summary="HTTP Response codes" border="1">
+      <tr><td> HTTP Status Code </td><td> Description </td><td> Response Headers </td></tr>
       {{#responses}}
-      <tr><td> {{code}} </td><td> {{message}} </td></tr>
+      <tr><td> {{code}} </td><td> {{message}} </td><td> {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} </td></tr>
       {{/responses}}
-     </table>
-
-     <p><b>HTTP response headers</b>
-     <table summary="HTTP response headers" border="1">
-      <tr><td> Header Name </td><td> Description </td></tr>
-      {{#responseHeaders}}
-      <tr><td> {{baseName}} </td><td> {{description}} </td></tr>
-      {{/responseHeaders}}
      </table>
 		 
      */
