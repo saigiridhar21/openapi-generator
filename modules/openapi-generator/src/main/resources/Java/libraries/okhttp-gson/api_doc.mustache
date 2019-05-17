@@ -12,7 +12,7 @@ Method | HTTP request | Description
 {{#operation}}
 <a name="{{operationId}}"></a>
 # **{{operationId}}WithHttpInfo**{{^vendorExtensions.x-group-parameters}}
-> {{#returnType}}ApiResponse&lt;{{returnType}}{{/returnType}}&gt; {{operationId}}WithHttpInfo({{#allParams}}{{{paramName}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}
+> {{#returnType}}ApiResponse&lt;{{{returnType}}}&gt;{{/returnType}}{{^returnType}}ApiResponse&lt;Void&gt;{{/returnType}} {{operationId}}WithHttpInfo({{#allParams}}{{{paramName}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}
 > {{#returnType}}{{returnType}} {{/returnType}}{{operationId}}({{#requiredParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}){{#optionalParams}}.{{paramName}}({{paramName}}){{/optionalParams}}.execute();{{/vendorExtensions.x-group-parameters}}
 
 {{summary}}{{#notes}}
