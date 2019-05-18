@@ -115,7 +115,7 @@ namespace Example
         public static void main()
         {
 {{#apiInfo}}{{#apis}}{{#-first}}{{#operations}}{{#operation}}{{#-first}}
-		    Configuration.Default.BasePath = "https://api.factset.com";
+            Configuration.Default.BasePath = "https://api.factset.com";
             {{#hasAuthMethods}}
             {{#authMethods}}
             {{#isBasic}}
@@ -152,7 +152,7 @@ namespace Example
                 {{#summary}}
                 // {{{.}}}
                 {{/summary}}
-                {{#returnType}}ApiResponse<{{{returnType}}}> result = {{/returnType}}{{^returnType}}ApiResponse<Object> result = {{/returnType}}apiInstance.{{{operationId}}}WithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}
+                {{#returnType}}ApiResponse<{{{returnType}}}> result = {{/returnType}}{{^returnType}}ApiResponse<Object> result = {{/returnType}}apiInstance.{{{operationId}}}WithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
                 Console.WriteLine("--------------------------------------------------------");
                 Console.WriteLine("Response Code : "+result.StatusCode);
                 Console.WriteLine("--------------------------------------------------------");
@@ -163,8 +163,8 @@ namespace Example
                 Console.ReadKey();
             }
             catch (ApiException e)
-			{
-                Console.WriteLine("Exception when calling {{classname}}.{{operationId}}: " + e.ErrorContent );
+            {
+                Console.WriteLine("Exception when calling {{classname}}.{{operationId}}WithHttpInfo: " + e.ErrorContent );
                 Console.WriteLine("--------------------------------------------------------");
                 Console.WriteLine("Response Code: "+ e.ErrorCode);
                 Console.WriteLine("--------------------------------------------------------");
