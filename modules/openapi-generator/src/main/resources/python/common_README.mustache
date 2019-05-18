@@ -1,12 +1,12 @@
 ```python
-from {{{projectName}}}.api import {{{classname}}} 
-from {{{projectName}}}.rest import ApiException
-from {{{projectName}}}.api_client import ApiClient
-from {{{projectName}}}.configuration import Configuration
+from {{{packageName}}}.api import {{{classname}}} 
+from {{{packageName}}}.rest import ApiException
+from {{{packageName}}}.api_client import ApiClient
+from {{{packageName}}}.configuration import Configuration
 from pprint import pprint
 {{#apiInfo}}{{#apis}}{{#-first}}{{#operations}}{{#operation}}{{#-first}}
 {{#allParams}}
-{{^isPrimitiveType}}from {{projectName}}.models import {{{dataType}}}
+{{^isPrimitiveType}}from {{packageName}}.models import {{{dataType}}}
 {{/isPrimitiveType}}
 {{/allParams}}
 
