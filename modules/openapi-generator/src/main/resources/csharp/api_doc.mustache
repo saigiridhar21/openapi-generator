@@ -2,19 +2,19 @@
 
 {{description}}{{/description}}
 
-All URIs are relative to *{{{basePath}}}*
+All URIs are relative to https://api.factset.com
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-{{#operations}}{{#operation}}[**{{operationId}}**]({{classname}}.md#{{operationIdLowerCase}}) | **{{httpMethod}}** {{path}} | {{#summary}}{{summary}}{{/summary}}
+{{#operations}}{{#operation}}[**{{operationId}}WithHttpInfo**]({{classname}}.md#{{operationIdLowerCase}}) | **{{httpMethod}}** {{path}} | {{#summary}}{{summary}}{{/summary}}
 {{/operation}}{{/operations}}
 
 {{#operations}}
 {{#operation}}
 
-## {{{operationId}}}
+## {{{operationId}}}WithHttpInfo
 
-> {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+> {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}}WithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
 
 {{{summary}}}{{#notes}}
 
@@ -24,23 +24,25 @@ Method | HTTP request | Description
 
 ```csharp
 using System;
-using System.Diagnostics;
+using System.Net;
+using System.Collections.Generic;
 using {{packageName}}.{{apiPackage}};
 using {{packageName}}.Client;
 using {{packageName}}.{{modelPackage}};
 
 namespace Example
 {
-    public class {{operationId}}Example
+    public class {{operationId}}WithHttpInfoExample
     {
-        public void main()
+        public static void main()
         {
+		    Configuration.Default.BasePath = "https://api.factset.com";
             {{#hasAuthMethods}}
             {{#authMethods}}
             {{#isBasic}}
             // Configure HTTP basic authorization: {{{name}}}
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            Configuration.Default.Username = "YOUR_USERNAME"; // username-serial combination
+            Configuration.Default.Password = "YOUR_PASSWORD"; // api key generated on developer portal
             {{/isBasic}}
             {{#isApiKey}}
             // Configure API key authorization: {{{name}}}
@@ -55,7 +57,7 @@ namespace Example
             {{/authMethods}}
 
             {{/hasAuthMethods}}
-            var apiInstance = new {{classname}}();
+            var apiInstance = new {{classname}}(Configuration.Default);
             {{#allParams}}
             {{#isPrimitiveType}}
             var {{paramName}} = {{{example}}};  // {{{dataType}}} | {{{description}}}{{^required}} (optional) {{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
@@ -64,18 +66,30 @@ namespace Example
             var {{paramName}} = new {{{dataType}}}(); // {{{dataType}}} | {{{description}}}{{^required}} (optional) {{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
             {{/isPrimitiveType}}
             {{/allParams}}
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             try
             {
                 {{#summary}}
                 // {{{.}}}
                 {{/summary}}
-                {{#returnType}}{{returnType}} result = {{/returnType}}apiInstance.{{{operationId}}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}
-                Debug.WriteLine(result);{{/returnType}}
+                {{#returnType}}ApiResponse<{{{returnType}}}> result = {{/returnType}}{{^returnType}}ApiResponse<Object> result = {{/returnType}}apiInstance.{{{operationId}}}WithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}
+                Console.WriteLine("--------------------------------------------------------");
+                Console.WriteLine("Response Code : "+result.StatusCode);
+                Console.WriteLine("--------------------------------------------------------");
+                {{#returnType}}
+                Console.WriteLine(result.Data);
+                Console.WriteLine("--------------------------------------------------------");
+                {{/returnType}}
+                Console.ReadKey();
             }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling {{classname}}.{{operationId}}: " + e.Message );
+            catch (ApiException e)
+			{
+                Console.WriteLine("Exception when calling {{classname}}.{{operationId}}: " + e.ErrorContent );
+                Console.WriteLine("--------------------------------------------------------");
+                Console.WriteLine("Response Code: "+ e.ErrorCode);
+                Console.WriteLine("--------------------------------------------------------");
+                Console.WriteLine(e.StackTrace);
             }
         }
     }
@@ -102,6 +116,13 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: {{#consumes}}{{{mediaType}}}{{#hasMore}}, {{/hasMore}}{{/consumes}}{{^consumes}}Not defined{{/consumes}}
 - **Accept**: {{#produces}}{{{mediaType}}}{{#hasMore}}, {{/hasMore}}{{/produces}}{{^produces}}Not defined{{/produces}}
+
+### HTTP response details
+| HTTP Status Code | Description | Response Headers |
+|------------------|-------------|------------------|
+{{#responses}}
+**{{code}}** | {{message}} | {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}} |
+{{/responses}}
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
