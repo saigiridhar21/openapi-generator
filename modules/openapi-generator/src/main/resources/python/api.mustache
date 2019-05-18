@@ -46,9 +46,13 @@ class {{classname}}(object):
 {{/sortParamsByRequiredFlag}}
         >>> result = thread.get()
 
-        :param async_req bool
+        :param async_req To make an asynchronous HTTP request, please pass async_req=True (optional)
+        :type async_req: bool
+        :param _request_timeout: timeout setting for this request. If one number provided, it will be total request timeout in seconds. It can also be a pair (tuple) of (connection, read) timeouts. If timeout occurs it will throw urllib3.exceptions.MaxRetryError Exception.(optional)
+        :type _request_timeout: int
 {{#allParams}}
-        :param {{dataType}} {{paramName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
+        :param {{paramName}}: {{#description}} {{{description}}} {{/description}} {{#required}} (required){{/required}}{{^required}}(optional){{/required}}
+        :type {{paramName}}: {{dataType}}
 {{/allParams}}
         :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
                  If the method is called asynchronously,
@@ -77,11 +81,15 @@ class {{classname}}(object):
 {{/sortParamsByRequiredFlag}}
         >>> result = thread.get()
 
-        :param async_req bool
+        :param async_req To make an asynchronous HTTP request, please pass async_req=True (optional)
+        :type async_req: bool
+        :param _request_timeout: timeout setting for this request. If one number provided, it will be total request timeout in seconds. It can also be a pair (tuple) of (connection, read) timeouts. If timeout occurs it will throw urllib3.exceptions.MaxRetryError Exception.(optional)
+        :type _request_timeout: int
 {{#allParams}}
-        :param {{dataType}} {{paramName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/optional}}
+        :param {{paramName}}: {{#description}} {{{description}}} {{/description}} {{#required}} (required){{/required}}{{^required}}(optional){{/required}}{{#optional}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/optional}}
+        :type {{paramName}}: {{dataType}}
 {{/allParams}}
-        :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
+        :return: {{#returnType}}tuple({{returnType}}, response_code(int), headers(HTTPHeaderDict)){{/returnType}}{{^returnType}}None{{/returnType}}
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -203,6 +211,7 @@ class {{classname}}(object):
         {{/hasProduces}}
         {{#hasConsumes}}
         # HTTP header `Content-Type`
+        if 'Content-Type' not in header_params.keys():
         header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
             [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])  # noqa: E501
 

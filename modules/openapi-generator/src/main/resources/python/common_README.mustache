@@ -1,4 +1,61 @@
 ```python
+from {{{projectName}}}.api import {{{classname}}} 
+from {{{projectName}}}.rest import ApiException
+from {{{projectName}}}.api_client import ApiClient
+from {{{projectName}}}.configuration import Configuration
+from pprint import pprint
+{{#apiInfo}}{{#apis}}{{#-first}}{{#operations}}{{#operation}}{{#-first}}
+{{#allParams}}
+{{^isPrimitiveType}}from {{projectName}}.models import {{{dataType}}}
+{{/isPrimitiveType}}
+{{/allParams}}
+
+# create an instance of API configuration
+{{> python_doc_auth_partial}}
+
+config.host = "https://api.factset.com"
+
+# if verify_ssl parameter set as True then add the ssl certificate path
+config.verify_ssl = False
+
+# uncomment the line below and provide the ssl certificate path
+# config.ssl_ca_cert= "path//to//certificate//file"
+
+# create an instance of API client
+api_client = ApiClient(config)
+
+# create an instance of the API class
+api_instance = {{{classname}}}(api_client)
+{{! If the datatype of parameter is not primitive, we need to create that parameter's object using openapi generated model }}
+{{#allParams}}{{paramName}} = {{#isPrimitiveType}} {{{example}}} {{/isPrimitiveType}}{{^isPrimitiveType}} {{{dataType}}}() {{/isPrimitiveType}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+{{/allParams}}
+
+try:
+{{#summary}}    # {{{.}}}
+{{/summary}}    api_response = api_instance.{{{operationId}}}_with_http_info({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}{{paramName}}={{paramName}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    {{! If the api endpoint is returning the data, printing the data and response code}}
+    {{#returnType}}
+    print('----------------------------------------------------------')
+    print('Response Code : '+ str(api_response[1]))
+    print('----------------------------------------------------------')
+    print('Response Data')
+    pprint(api_response[0])
+    print('----------------------------------------------------------')
+    {{/returnType}}
+    {{! If the endpoint is not returning data, printing only the response code}}
+    {{^returnType}}
+    print('----------------------------------------------------------')
+    print('Response Code : '+ str(api_response[1]))
+    print('----------------------------------------------------------')
+    {{/returnType}}
+     
+except ApiException as e:
+    print("Exception when calling {{classname}} -> {{operationId}}_with_http_info")
+    print("%s" % e)
+{{/-first}}{{/operation}}{{/operations}}{{/-first}}{{/apis}}{{/apiInfo}}
+```
+
+```python
 from __future__ import print_function
 import time
 import {{{packageName}}}
@@ -26,7 +83,7 @@ All URIs are relative to *{{basePath}}*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}*{{classname}}* | [**{{operationId}}**]({{apiDocPath}}{{classname}}.md#{{operationIdLowerCase}}) | **{{httpMethod}}** {{path}} | {{#summary}}{{summary}}{{/summary}}
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}*{{classname}}* | [**{{operationId}}_with_http_info**]({{apiDocPath}}{{classname}}.md#{{operationIdLowerCase}}) | **{{httpMethod}}** {{path}} | {{#summary}}{{summary}}{{/summary}}
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
 ## Documentation For Models
