@@ -55,28 +55,6 @@ except ApiException as e:
 {{/-first}}{{/operation}}{{/operations}}{{/-first}}{{/apis}}{{/apiInfo}}
 ```
 
-```python
-from __future__ import print_function
-import time
-import {{{packageName}}}
-from {{{packageName}}}.rest import ApiException
-from pprint import pprint
-{{#apiInfo}}{{#apis}}{{#-first}}{{#operations}}{{#operation}}{{#-first}}
-{{> python_doc_auth_partial}}
-# create an instance of the API class
-api_instance = {{{packageName}}}.{{{classname}}}({{{packageName}}}.ApiClient(configuration))
-{{#allParams}}{{paramName}} = {{{example}}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
-{{/allParams}}
-
-try:
-{{#summary}}    # {{{.}}}
-{{/summary}}    {{#returnType}}api_response = {{/returnType}}api_instance.{{{operationId}}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}{{paramName}}={{paramName}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{#returnType}}
-    pprint(api_response){{/returnType}}
-except ApiException as e:
-    print("Exception when calling {{classname}}->{{operationId}}: %s\n" % e)
-{{/-first}}{{/operation}}{{/operations}}{{/-first}}{{/apis}}{{/apiInfo}}
-```
-
 ## Documentation for API Endpoints
 
 All URIs are relative to *{{basePath}}*
