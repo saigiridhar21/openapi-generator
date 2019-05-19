@@ -241,12 +241,14 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("__init__model.mustache", packagePath() + File.separatorChar + modelPackage, "__init__.py"));
         supportingFiles.add(new SupportingFile("__init__api.mustache", packagePath() + File.separatorChar + apiPackage, "__init__.py"));
         
-        String[] packagePathParts = packagePath().split(File.separatorChar);
+        String[] packageNameSplits = packageName.split("\\.");
         String currentPackagePath = "";
-        for (int i=0, i < packagePathParts.length-1, i++) {
-            if (i > 0)
+        for (int i = 0; i < packageNameSplits.length-1; i++) {
+            if (i > 0) {
                 currentPackagePath = currentPackagePath + File.separatorChar;
-            supportingFiles.add(new SupportingFile("__init__.mustache", currentPackagePath + packagePathParts[i], "__init__.py"));
+            }
+            currentPackagePath = currentPackagePath + packageNameSplits[i];
+            supportingFiles.add(new SupportingFile("__init__.mustache", currentPackagePath, "__init__.py"));
         }
 
         supportingFiles.add(new SupportingFile("exceptions.mustache", packagePath(), "exceptions.py"));
