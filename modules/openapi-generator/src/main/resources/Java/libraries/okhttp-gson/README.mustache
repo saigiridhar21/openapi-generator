@@ -77,23 +77,26 @@ Please follow the [installation](#installation) instruction and execute the foll
 
 ```java
 {{#apiInfo}}{{#apis}}{{#-first}}{{#operations}}{{#operation}}{{#-first}}
-import {{{invokerPackage}}}.*;
-import {{{invokerPackage}}}.auth.*;
-import {{{modelPackage}}}.*;
+// Import classes:{{#hasAuthMethods}}
+import {{{invokerPackage}}}.ApiClient;{{/hasAuthMethods}}
+import {{{invokerPackage}}}.ApiException;{{#hasAuthMethods}}
+import {{{invokerPackage}}}.Configuration;
+import {{{invokerPackage}}}.auth.*;{{/hasAuthMethods}}
 import {{{package}}}.{{{classname}}};
+import {{{invokerPackage}}}.models.*;
 
-import java.io.File;
-import java.util.*;
-
-public class {{{classname}}}Example {
+public class Example {
 
     public static void main(String[] args) {
-        {{#hasAuthMethods}}ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+        {{#hasAuthMethods}}
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.factset.com");
         {{#authMethods}}{{#isBasic}}
         // Configure HTTP basic authorization: {{{name}}}
         HttpBasicAuth {{{name}}} = (HttpBasicAuth) defaultClient.getAuthentication("{{{name}}}");
-        {{{name}}}.setUsername("YOUR USERNAME");
-        {{{name}}}.setPassword("YOUR PASSWORD");{{/isBasic}}{{#isApiKey}}
+        {{{name}}}.setUsername("YOUR USERNAME"); // username-serial combination
+        {{{name}}}.setPassword("YOUR PASSWORD"); // api key generated on developer portal {{/isBasic}}{{#isApiKey}}
         // Configure API key authorization: {{{name}}}
         ApiKeyAuth {{{name}}} = (ApiKeyAuth) defaultClient.getAuthentication("{{{name}}}");
         {{{name}}}.setApiKey("YOUR API KEY");
@@ -105,17 +108,29 @@ public class {{{classname}}}Example {
         {{/authMethods}}
         {{/hasAuthMethods}}
 
-        {{{classname}}} apiInstance = new {{{classname}}}();
+        // To enable ssl verification
+        // defaultClient.setVerifyingSsl(true);
+        // defaultClient.setSslCaCert(certificate_inputstream);
+
+        {{{classname}}} apiInstance = new {{{classname}}}(defaultClient);
         {{#allParams}}
         {{{dataType}}} {{{paramName}}} = {{{example}}}; // {{{dataType}}} | {{{description}}}
         {{/allParams}}
+
+        {{#returnType}}ApiResponse<{{{returnType}}}>{{/returnType}}{{^returnType}}ApiResponse<Void>{{/returnType}} result = null;
         try {
-            {{#returnType}}{{{returnType}}} result = {{/returnType}}apiInstance.{{{operationId}}}{{^vendorExtensions.x-group-parameters}}({{#allParams}}{{{paramName}}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}({{#requiredParams}}{{{paramName}}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}){{#optionalParams}}
-                    .{{{paramName}}}({{{paramName}}}){{/optionalParams}}
-                    .execute();{{/vendorExtensions.x-group-parameters}}{{#returnType}}
-            System.out.println(result);{{/returnType}}
+            result = apiInstance.{{{operationId}}}WithHttpInfo{{^vendorExtensions.x-group-parameters}}({{#allParams}}{{{paramName}}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}({{#requiredParams}}{{{paramName}}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}){{#optionalParams}}
+                .{{{paramName}}}({{{paramName}}}){{/optionalParams}}
+                .execute();{{/vendorExtensions.x-group-parameters}}
+            System.out.println(result.getStatusCode());
+            {{#returnType}}System.out.println(result.getData());{{/returnType}}
         } catch (ApiException e) {
-            System.err.println("Exception when calling {{{classname}}}#{{{operationId}}}");
+            System.err.println("Exception when calling {{{classname}}}#{{{operationId}}}WithHttpInfo");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response body: " + e.getResponseBody());
+            if (e.getResponseHeaders() != null && e.getResponseHeaders().containsKey("X-DataDirect-Request-Key")){
+                System.err.println("X-DataDirect-Request-Key: " + e.getResponseHeaders().get("X-DataDirect-Request-Key").get(0));
+            }
             e.printStackTrace();
         }
     }
@@ -125,11 +140,11 @@ public class {{{classname}}}Example {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *{{basePath}}*
+All URIs are relative to https://api.factset.com
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}*{{classname}}* | [**{{operationId}}**]({{apiDocPath}}{{classname}}.md#{{operationId}}) | **{{httpMethod}}** {{path}} | {{#summary}}{{summary}}{{/summary}}
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}*{{classname}}* | [**{{operationId}}WithHttpInfo**]({{apiDocPath}}{{classname}}.md#{{operationId}}) | **{{httpMethod}}** {{path}} | {{#summary}}{{summary}}{{/summary}}
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
 ## Documentation for Models
@@ -147,7 +162,7 @@ Class | Method | HTTP request | Description
 - **API key parameter name**: {{keyParamName}}
 - **Location**: {{#isKeyInQuery}}URL query string{{/isKeyInQuery}}{{#isKeyInHeader}}HTTP header{{/isKeyInHeader}}
 {{/isApiKey}}
-{{#isBasic}}- **Type**: HTTP basic authentication
+{{#isBasic}}- **Type**: HTTP basic authentication where username will be USER-SERIAL combination and password will be api key generated on developer portal.
 {{/isBasic}}
 {{#isOAuth}}- **Type**: OAuth
 - **Flow**: {{flow}}

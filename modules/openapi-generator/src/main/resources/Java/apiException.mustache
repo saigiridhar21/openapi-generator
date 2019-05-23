@@ -3,7 +3,9 @@
 package {{invokerPackage}};
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.List;
+import java.util.TreeMap;
 
 {{>generatedAnnotation}}
 public class ApiException extends{{#useRuntimeException}} RuntimeException {{/useRuntimeException}}{{^useRuntimeException}} Exception {{/useRuntimeException}}{
@@ -24,7 +26,11 @@ public class ApiException extends{{#useRuntimeException}} RuntimeException {{/us
     public ApiException(String message, Throwable throwable, int code, Map<String, List<String>> responseHeaders, String responseBody) {
         super(message, throwable);
         this.code = code;
-        this.responseHeaders = responseHeaders;
+        Map<String, List<String>> headers = new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
+        for(Entry<String, List<String>> entry : responseHeaders.entrySet()){		
+        	headers.put(entry.getKey().toLowerCase(), entry.getValue());		
+        }
+        this.responseHeaders = headers;
         this.responseBody = responseBody;
     }
 
@@ -47,7 +53,11 @@ public class ApiException extends{{#useRuntimeException}} RuntimeException {{/us
 
     public ApiException(int code, String message, Map<String, List<String>> responseHeaders, String responseBody) {
         this(code, message);
-        this.responseHeaders = responseHeaders;
+        Map<String, List<String>> headers = new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
+        for(Entry<String, List<String>> entry : responseHeaders.entrySet()){		
+        	headers.put(entry.getKey().toLowerCase(), entry.getValue());		
+        }
+        this.responseHeaders = headers;
         this.responseBody = responseBody;
     }
 
