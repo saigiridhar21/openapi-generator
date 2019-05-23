@@ -1,27 +1,54 @@
 ```python
-from __future__ import print_function
-import time
-import {{{packageName}}}
+from {{{packageName}}}.api import {{{classname}}} 
 from {{{packageName}}}.rest import ApiException
+from {{{packageName}}}.api_client import ApiClient
+from {{{packageName}}}.configuration import Configuration
 from pprint import pprint
+{{#allParams}}
+{{^isPrimitiveType}}from {{packageName}}.models import {{{dataType}}}
+{{/isPrimitiveType}}
+{{/allParams}}
+
+# create an instance of API configuration
 {{> python_doc_auth_partial}}
-{{#hasAuthMethods}}
+
+config.host = "https://api.factset.com"
+
+# if verify_ssl parameter set as True then add the ssl certificate path
+config.verify_ssl = False
+
+# uncomment the line below and provide the ssl certificate path
+# config.ssl_ca_cert= "path//to//certificate//file"
+
+# create an instance of API client
+api_client = ApiClient(config)
+
 # create an instance of the API class
-api_instance = {{{packageName}}}.{{{classname}}}({{{packageName}}}.ApiClient(configuration))
-{{#allParams}}{{paramName}} = {{{example}}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
+api_instance = {{{classname}}}(api_client)
+{{! If the datatype of parameter is not primitive, we need to create that parameter's object using openapi generated model }}
+{{#allParams}}{{paramName}} = {{#isPrimitiveType}} {{{example}}} {{/isPrimitiveType}}{{^isPrimitiveType}} {{{dataType}}}() {{/isPrimitiveType}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
 {{/allParams}}
-{{/hasAuthMethods}}
-{{^hasAuthMethods}}
-# create an instance of the API class
-api_instance = {{{packageName}}}.{{{classname}}}()
-{{#allParams}}{{paramName}} = {{{example}}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
-{{/allParams}}
-{{/hasAuthMethods}}
 
 try:
 {{#summary}}    # {{{.}}}
-{{/summary}}    {{#returnType}}api_response = {{/returnType}}api_instance.{{{operationId}}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}{{paramName}}={{paramName}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{#returnType}}
-    pprint(api_response){{/returnType}}
+{{/summary}}    api_response = api_instance.{{{operationId}}}_with_http_info({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}{{paramName}}={{paramName}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    {{! If the api endpoint is returning the data, printing the data and response code}}
+    {{#returnType}}
+    print('----------------------------------------------------------')
+    print('Response Code : '+ str(api_response[1]))
+    print('----------------------------------------------------------')
+    print('Response Data')
+    pprint(api_response[0])
+    print('----------------------------------------------------------')
+    {{/returnType}}
+    {{! If the endpoint is not returning data, printing only the response code}}
+    {{^returnType}}
+    print('----------------------------------------------------------')
+    print('Response Code : '+ str(api_response[1]))
+    print('----------------------------------------------------------')
+    {{/returnType}}
+     
 except ApiException as e:
-    print("Exception when calling {{classname}}->{{operationId}}: %s\n" % e)
+    print("Exception when calling {{classname}} -> {{operationId}}_with_http_info")
+    print("%s" % e)
 ```

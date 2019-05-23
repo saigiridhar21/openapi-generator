@@ -4,8 +4,8 @@ configuration = {{{packageName}}}.Configuration()
 {{#isBasic}}
 {{^isBasicBearer}}
 # Configure HTTP basic authorization: {{{name}}}
-configuration.username = 'YOUR_USERNAME'
-configuration.password = 'YOUR_PASSWORD'
+configuration.username = 'YOUR_USERNAME' # username-serial combination
+configuration.password = 'YOUR_PASSWORD' # api key generated on developer portal
 {{/isBasicBearer}}
 {{#isBasicBearer}}
 # Configure Bearer authorization{{#bearerFormat}} ({{{.}}}){{/bearerFormat}}: {{{name}}}
