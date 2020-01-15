@@ -7,14 +7,10 @@ abstract class Category implements Built<Category, CategoryBuilder> {
 
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'id')
     int get id;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'name')
     String get name;
 

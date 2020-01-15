@@ -21,6 +21,7 @@ import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.Schema;
 import org.openapitools.codegen.*;
+import org.openapitools.codegen.meta.features.*;
 import org.openapitools.codegen.utils.ModelUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,6 +83,31 @@ public class CSharpNetCoreClientCodegen extends AbstractCSharpCodegen {
 
     public CSharpNetCoreClientCodegen() {
         super();
+
+        featureSet = getFeatureSet().modify()
+                .includeDocumentationFeatures(DocumentationFeature.Readme)
+                .securityFeatures(EnumSet.of(
+                        SecurityFeature.OAuth2_Implicit,
+                        SecurityFeature.BasicAuth,
+                        SecurityFeature.ApiKey
+                ))
+                .excludeGlobalFeatures(
+                        GlobalFeature.XMLStructureDefinitions,
+                        GlobalFeature.Callbacks,
+                        GlobalFeature.LinkObjects,
+                        GlobalFeature.ParameterStyling
+                )
+                .includeSchemaSupportFeatures(
+                        SchemaSupportFeature.Polymorphism
+                )
+                .includeParameterFeatures(
+                        ParameterFeature.Cookie
+                )
+                .includeClientModificationFeatures(
+                        ClientModificationFeature.BasePath,
+                        ClientModificationFeature.UserAgent
+                )
+                .build();
 
         // mapped non-nullable type without ?
         typeMapping = new HashMap<String, String>();
@@ -185,6 +211,10 @@ public class CSharpNetCoreClientCodegen extends AbstractCSharpCodegen {
                 CodegenConstants.OPTIONAL_ASSEMBLY_INFO_DESC,
                 this.optionalAssemblyInfoFlag);
 
+        addSwitch(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES,
+                CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES_DESC,
+                this.optionalEmitDefaultValuesFlag);
+
         addSwitch(CodegenConstants.OPTIONAL_PROJECT_FILE,
                 CodegenConstants.OPTIONAL_PROJECT_FILE_DESC,
                 this.optionalProjectFileFlag);
@@ -248,7 +278,7 @@ public class CSharpNetCoreClientCodegen extends AbstractCSharpCodegen {
                 }
 
                 for (final CodegenProperty property : codegenModel.readWriteVars) {
-                    if (property.defaultValue == null && property.baseName.equals(parentCodegenModel.discriminator.getPropertyName())) {
+                    if (property.defaultValue == null && parentCodegenModel.discriminator != null && property.baseName.equals(parentCodegenModel.discriminator.getPropertyName())) {
                         property.defaultValue = "\"" + name + "\"";
                     }
                 }
@@ -370,6 +400,8 @@ public class CSharpNetCoreClientCodegen extends AbstractCSharpCodegen {
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         postProcessPattern(property.pattern, property.vendorExtensions);
+        postProcessEmitDefaultValue(property.vendorExtensions);
+
         super.postProcessModelProperty(model, property);
     }
 
@@ -403,6 +435,7 @@ public class CSharpNetCoreClientCodegen extends AbstractCSharpCodegen {
     @Override
     public void postProcessParameter(CodegenParameter parameter) {
         postProcessPattern(parameter.pattern, parameter.vendorExtensions);
+        postProcessEmitDefaultValue(parameter.vendorExtensions);
         super.postProcessParameter(parameter);
 
         if (!parameter.required && nullableType.contains(parameter.dataType)) { //optional
@@ -446,6 +479,10 @@ public class CSharpNetCoreClientCodegen extends AbstractCSharpCodegen {
         }
     }
 
+    public void postProcessEmitDefaultValue(Map<String, Object> vendorExtensions) {
+        vendorExtensions.put("x-emit-default-value", optionalEmitDefaultValuesFlag);
+    }
+
     @Override
     public Mustache.Compiler processCompiler(Mustache.Compiler compiler) {
         // To avoid unexpected behaviors when options are passed programmatically such as { "supportsAsync": "" }
@@ -464,6 +501,13 @@ public class CSharpNetCoreClientCodegen extends AbstractCSharpCodegen {
          * Use the pattern:
          *     if (additionalProperties.containsKey(prop)) convertPropertyToBooleanAndWriteBack(prop);
          */
+
+        if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES)) {
+            setOptionalEmitDefaultValuesFlag(convertPropertyToBooleanAndWriteBack(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES));
+        } else {
+            additionalProperties.put(CodegenConstants.OPTIONAL_EMIT_DEFAULT_VALUES, optionalEmitDefaultValuesFlag);
+        }
+
 
         if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
             setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
@@ -608,6 +652,10 @@ public class CSharpNetCoreClientCodegen extends AbstractCSharpCodegen {
 
     public void setOptionalAssemblyInfoFlag(boolean flag) {
         this.optionalAssemblyInfoFlag = flag;
+    }
+
+    public void setOptionalEmitDefaultValuesFlag(boolean flag){
+        this.optionalEmitDefaultValuesFlag = flag;
     }
 
     public void setOptionalProjectFileFlag(boolean flag) {

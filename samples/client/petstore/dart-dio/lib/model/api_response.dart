@@ -7,20 +7,14 @@ abstract class ApiResponse implements Built<ApiResponse, ApiResponseBuilder> {
 
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'code')
     int get code;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'type')
     String get type;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'message')
     String get message;
 

@@ -7,50 +7,34 @@ abstract class User implements Built<User, UserBuilder> {
 
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'id')
     int get id;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'username')
     String get username;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'firstName')
     String get firstName;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'lastName')
     String get lastName;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'email')
     String get email;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'password')
     String get password;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'phone')
     String get phone;
     /* User Status */
         @nullable
-
-    /* User Status */
     @BuiltValueField(wireName: 'userStatus')
     int get userStatus;
 

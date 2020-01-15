@@ -7,14 +7,10 @@ abstract class Tag implements Built<Tag, TagBuilder> {
 
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'id')
     int get id;
     
         @nullable
-
-    
     @BuiltValueField(wireName: 'name')
     String get name;
 
