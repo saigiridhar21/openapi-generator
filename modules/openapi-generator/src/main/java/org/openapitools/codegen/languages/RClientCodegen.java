@@ -45,13 +45,15 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected boolean returnExceptionOnFailure = false;
     protected String exceptionPackage = "default";
     protected Map<String, String> exceptionPackages = new LinkedHashMap<String, String>();
+    protected String maintainerName = "OpenAPI Generator community";
+    protected String maintainerEmail = "team@openapitools.org";
 
     public static final String EXCEPTION_PACKAGE = "exceptionPackage";
     public static final String USE_DEFAULT_EXCEPTION = "useDefaultExceptionHandling";
     public static final String USE_RLANG_EXCEPTION = "useRlangExceptionHandling";
     public static final String DEFAULT = "default";
     public static final String RLANG = "rlang";
-
+ 
     protected boolean useDefaultExceptionHandling = false;
     protected boolean useRlangExceptionHandling = false;
 
@@ -128,6 +130,10 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
                 .defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(new CliOption(CodegenConstants.EXCEPTION_ON_FAILURE, CodegenConstants.EXCEPTION_ON_FAILURE_DESC)
                 .defaultValue(Boolean.FALSE.toString()));
+        cliOptions.add(new CliOption(CodegenConstants.MAINTAINER_NAME, CodegenConstants.MAINTAINER_NAME_DESC)
+                .defaultValue(maintainerName));
+        cliOptions.add(new CliOption(CodegenConstants.MAINTAINER_EMAIL, CodegenConstants.MAINTAINER_EMAIL_DESC)
+                .defaultValue(maintainerEmail));
 
         exceptionPackages.put(DEFAULT, "Use stop() for raising exceptions.");
         exceptionPackages.put(RLANG, "Use rlang package for exceptions.");
@@ -166,6 +172,18 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
             setExceptionPackageToUse(exceptionPackage);
         } else {
             setExceptionPackageToUse(DEFAULT);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.MAINTAINER_NAME)) {
+            setMaintainerName((String) additionalProperties.get(CodegenConstants.MAINTAINER_NAME));
+        } else {
+            setMaintainerName(maintainerName);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.MAINTAINER_EMAIL)) {
+            setMaintainerEmail((String) additionalProperties.get(CodegenConstants.MAINTAINER_EMAIL));
+        } else {
+            setMaintainerEmail(maintainerEmail);
         }
 
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
@@ -435,6 +453,14 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
           supportingFiles.add(new SupportingFile("api_exception.mustache", File.separator + "R", "api_exception.R"));
           this.useRlangExceptionHandling = true;
         }
+    }
+
+    public void setMaintainerName(String maintainerName) {
+        this.maintainerName = maintainerName;
+    }
+	
+    public void setMaintainerEmail(String maintainerEmail) {
+        this.maintainerEmail = maintainerEmail;
     }
 
     @Override

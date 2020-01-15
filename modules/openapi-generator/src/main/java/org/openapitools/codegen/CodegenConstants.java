@@ -251,6 +251,12 @@ public class CodegenConstants {
     public static final String CASE_INSENSITIVE_RESPONSE_HEADERS = "caseInsensitiveResponseHeaders";
     public static final String CASE_INSENSITIVE_RESPONSE_HEADERS_DESC = "Make API response's headers case-insensitive";
 
+    public static final String MAINTAINER_NAME = "maintainerName";
+    public static final String MAINTAINER_NAME_DESC = "maintainer name";
+
+    public static final String MAINTAINER_EMAIL = "maintainerEmail";
+    public static final String MAINTAINER_EMAIL_DESC = "maintainer email";
+
     // Not user-configurable. System provided for use in templates.
 
     public static final String GENERATE_APIS = "generateApis";
